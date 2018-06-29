@@ -34,13 +34,13 @@ class Kernel extends ConsoleKernel
             foreach($this->coins as $coin){
                 GetTweets::dispatch($coin);
             }
-        })->everyMinute();
+        })->everyThirtyMinutes();
 
         $schedule->call(function () {
             foreach($this->coins as $coin){
                 ProcessDailyScore::dispatch($coin);
             }
-        })->dailyAt('12:35');
+        })->dailyAt('23:45');
     }
 
     /**
