@@ -17,6 +17,7 @@ class GetTweets implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $coin;
+    protected $sinceId;
 
     /**
      * Create a new job instance.
@@ -24,9 +25,10 @@ class GetTweets implements ShouldQueue
      * @return void
      */
     
-    public function __construct($coin)
+    public function __construct($coin, $sinceId)
     {
         $this->coin = $coin;
+        $this->sinceId = $sinceId;
     }
 
     /**
@@ -36,9 +38,8 @@ class GetTweets implements ShouldQueue
      */
     public function handle()
     {
-        $sinceId = DB::table('tweets')->max('tweet_id');
         $settings = config('twitter');
-        $getfield = "?q=#". $this->coin . " -filter:retweets&result_type=recent&lang=en&count=15&since_id=".$sinceId;
+        $getfield = "?q=#". $this->coin . " -filter:retweets&result_type=recent&lang=en&count=15&since_id=".$this->sinceId;
       
         $twitter = new TwitterAPIExchange($settings['auth']);
         $tweets = $twitter->setGetfield($getfield)

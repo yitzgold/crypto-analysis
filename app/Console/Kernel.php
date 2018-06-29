@@ -7,6 +7,7 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 use App\Jobs\GetTweets;
 use App\Jobs\ProcessDailyScore;
+use DB;
 
 class Kernel extends ConsoleKernel
 {
@@ -19,6 +20,7 @@ class Kernel extends ConsoleKernel
         //
     ];
     protected $coins;
+    protected $sinceId;
 
     /**
      * Define the application's command schedule.
@@ -29,10 +31,13 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $this->coins = config('twitter.coins');
+        
 
         $schedule->call(function () {
+            $this->sinceId = DB::table('tweets')->max('tweet_id');
+
             foreach($this->coins as $coin){
-                GetTweets::dispatch($coin);
+                GetTweets::dispatch($coin, $this->sinceId);
             }
         })->everyThirtyMinutes();
 
