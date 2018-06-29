@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $this->coins = config('twitter.coins');
-        
+
 
         $schedule->call(function () {
             $this->sinceId = DB::table('tweets')->max('tweet_id');
