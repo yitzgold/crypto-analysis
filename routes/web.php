@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', 'ChartsDisplayController@displayChart');
 
 Auth::routes();
 
