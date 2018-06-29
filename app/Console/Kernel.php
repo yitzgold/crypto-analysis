@@ -5,6 +5,9 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
+use App\Jobs\GetTweets;
+use App\Jobs\ProcessDailyScore;
+
 class Kernel extends ConsoleKernel
 {
     /**
@@ -24,8 +27,19 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $coins = config('twitter.coins');
+
+        $schedule->call(function () {
+            foreach($coins as $coin){
+                GetTweets::dispatch($coin);
+            } 
+        })->everyThirtyMinutes();
+
+        $schedule->call(function () {
+            foreach($coins as $coin){
+                ProcessDailyScore::dispatch($coin);
+            } 
+        })->dailyAt('23:45');
     }
 
     /**
