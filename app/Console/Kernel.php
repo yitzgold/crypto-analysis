@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         //
     ];
+    protected $coins;
 
     /**
      * Define the application's command schedule.
@@ -27,19 +28,19 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $coins = config('twitter.coins');
+        $this->coins = config('twitter.coins');
 
         $schedule->call(function () {
-            foreach($coins as $coin){
+            foreach($this->coins as $coin){
                 GetTweets::dispatch($coin);
-            } 
-        })->everyThirtyMinutes();
+            }
+        })->everyMinute();
 
         $schedule->call(function () {
-            foreach($coins as $coin){
+            foreach($this->coins as $coin){
                 ProcessDailyScore::dispatch($coin);
-            } 
-        })->dailyAt('23:45');
+            }
+        })->dailyAt('12:35');
     }
 
     /**
