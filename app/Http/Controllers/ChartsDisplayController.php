@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\DailyScore;
+
 
 class ChartsDisplayController extends Controller
 {
     public function displayChart()
     {
-        $daily =DailyScore::all();
+        $daily = DailyScore::all();
 
-        $chart =Charts::multi('line', 'fusioncharts')
+        $chart = Charts::multi('line', 'fusioncharts')
             ->title("Crypto Sentiment Analysis")
             ->elementLabel('score')
             ->labels($daily->unique('created_at')->pluck('created_at'))
