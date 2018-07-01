@@ -18,7 +18,7 @@ Route::get('/abc', function () {
     $t = $users = DB::table('tweets')->get();
     var_dump($t);
 
-    $ds = $users = DB::table('daiy_scores')->get();
+    $ds = $users = DB::table('daily_scores')->get();
     var_dump($ds);
 
 
