@@ -39,8 +39,8 @@ class Kernel extends ConsoleKernel
             foreach($this->coins as $coin){
                 GetTweets::dispatch($coin, $this->sinceId);
             }
-        //})->everyThirtyMinutes();
-        })->everyMinute();
+        })->everyThirtyMinutes();
+
 
         $schedule->call(function () {
             foreach($this->coins as $coin){
