@@ -24,7 +24,7 @@ class GetTweets implements ShouldQueue
      *
      * @return void
      */
-    
+
     public function __construct($coin, $sinceId)
     {
         $this->coin = $coin;
@@ -39,15 +39,15 @@ class GetTweets implements ShouldQueue
     public function handle()
     {
         $settings = config('twitter');
-        $getfield = "?q=#". $this->coin . " -filter:retweets&result_type=recent&lang=en&count=15&since_id=".$this->sinceId;
-      
+        $getfield = "?q=#". $this->coin . " -filter:retweets&result_type=recent&tweet_mode=extended&lang=en&count=15&since_id=".$this->sinceId;
+
         $twitter = new TwitterAPIExchange($settings['auth']);
         $tweets = $twitter->setGetfield($getfield)
             ->buildOauth($settings['url'], $settings['requestMethod'])
             ->performRequest();
-        
+
         $tweetArr = json_decode($tweets, true);
-        foreach($tweetArr['statuses'] as $tweet){  
+        foreach($tweetArr['statuses'] as $tweet){
             ProcessTweet::dispatch($tweet, $this->coin);
         }
     }
