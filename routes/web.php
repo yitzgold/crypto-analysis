@@ -14,6 +14,12 @@
 
 Route::get('/', 'ChartsDisplayController@displayChart');
 
+Route::get('/abc', function () {
+    $avgScore = $users = DB::table('tweets')->get();
+    var_dump($avgScore);
+
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
