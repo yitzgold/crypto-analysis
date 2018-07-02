@@ -15,8 +15,9 @@
 Route::get('/', 'ChartsDisplayController@displayChart');
 
 Route::get('/abc', function () {
-    $t = $users = DB::table('tweets')->get();
-    var_dump($t);
+    // $t = $users = DB::table('tweets')->get();
+    // var_dump($t);
+    echo 'hi';
 
     $ds = $users = DB::table('daily_scores')->get();
     var_dump($ds);
