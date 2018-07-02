@@ -41,7 +41,7 @@ class ProcessTweet implements ShouldQueue
             'projectId' => config('google.projectId')
         ]);
         $language = $cloud->language();
-        $annotation = $language->analyzeSentiment($this->tweet['text']);
+        $annotation = $language->analyzeSentiment($this->tweet['full_text']);
         $sentiment = $annotation->sentiment();
         $score = $sentiment['score'];  
         $date = strtotime($this->tweet['created_at']);
@@ -50,7 +50,7 @@ class ProcessTweet implements ShouldQueue
             [
                 'tweet_id' => $this->tweet['id'],
                 'tweet_date' => $date,
-                'text' => $this->tweet['text'],
+                'text' => $this->tweet['full_text'],
                 'score' => $score, 
                 'coin' => $this->coin,
                 'created_at' => now()  

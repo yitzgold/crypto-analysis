@@ -39,7 +39,7 @@ class GetTweets implements ShouldQueue
     public function handle()
     {
         $settings = config('twitter');
-        $getfield = "?q=#". $this->coin . " -filter:retweets&result_type=recent&lang=en&count=15&since_id=".$this->sinceId;
+        $getfield = "?q=#". $this->coin . " -filter:retweets&result_type=recent&lang=en&count=15&since_id=".$this->sinceId.'&tweet_mode=extended';
       
         $twitter = new TwitterAPIExchange($settings['auth']);
         $tweets = $twitter->setGetfield($getfield)
