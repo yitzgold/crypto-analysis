@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\DailyScore;
 use Charts;
+use Illuminate\Support\Carbon;
 
 class ChartsDisplayController extends Controller
 {
@@ -14,7 +15,8 @@ class ChartsDisplayController extends Controller
     {
         $this->coins = config('twitter.coins');
 
-        $daily = DailyScore::all();
+        $daysBack= Carbon::today()->subDays(8);
+        $daily = DailyScore::whereDate('created_at','>=',$daysBack)->get();
 
         $chart = Charts::multi('line', 'highcharts')
             ->title("Crypto Sentiment Analysis")
