@@ -41,6 +41,7 @@ class Kernel extends ConsoleKernel
             }
         })->everyThirtyMinutes();
 
+
         $schedule->call(function () {
             foreach($this->coins as $coin){
                 ProcessDailyScore::dispatch($coin);
