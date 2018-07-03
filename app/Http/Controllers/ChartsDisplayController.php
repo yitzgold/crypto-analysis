@@ -15,8 +15,8 @@ class ChartsDisplayController extends Controller
     {
         $this->coins = config('twitter.coins');
 
-        $daysBack= Carbon::today()->subDays(8);
-        $daily = DailyScore::whereDate('created_at','>=',$daysBack)->get();
+        $daysBack= Carbon::today()->subDays(30);
+        $daily = DailyScore::whereDate('created_at', '>=', $daysBack)->get();
 
         $chart = Charts::multi('line', 'highcharts')
             ->title("Crypto Sentiment Analysis")
@@ -27,6 +27,6 @@ class ChartsDisplayController extends Controller
             };
             $chart->responsive(true);
 
-        return view('chart',['chart' => $chart]);
+        return view('chart', ['chart' => $chart]);
     }
 }
