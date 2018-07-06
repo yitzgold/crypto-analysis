@@ -34,7 +34,10 @@ class ProcessDailyScore implements ShouldQueue
     public function handle()
     {
         $avgScore = DB::table('tweets')
-            ->where('coin', $this->coin)
+            ->where([
+                ['coin', $this->coin],
+                ['score', '!=', 0.00],
+            ])
             ->wheredate('created_at', today())
             ->avg('score');
 
