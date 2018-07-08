@@ -20,9 +20,7 @@ Route::get('/admin', function()
         ->wheredate('created_at', today())
         ->get();
 
-    foreach($tweets as $tweet){
-        echo 'created at  ' . $tweet['created_at'] . '  score:  ' . $tweet['score'];
-    }
+    var_dump($tweets);
 }); 
 
 Auth::routes();
