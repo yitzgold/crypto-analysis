@@ -14,6 +14,17 @@
 
 Route::get('/', 'ChartsDisplayController@displayChart');
 
+Route::get('/admin', function()
+{
+    $tweets = DB::table('tweets')
+        ->wheredate('created_at', today())
+        ->get();
+
+    foreach($tweets as $tweet){
+        echo 'created at  ' . $tweet['created_at'] . '  score:  ' . $tweet['score'];
+    }
+}); 
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
