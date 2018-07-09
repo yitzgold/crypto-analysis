@@ -16,11 +16,25 @@ Route::get('/', 'ChartsDisplayController@displayChart');
 
 Route::get('/admin', function()
 {
-    $tweets = DB::table('tweets')
-        ->wheredate('created_at', today())
-        ->get();
-
-    var_dump($tweets);
+    DB::table('daily_scores')->insert(
+        [
+            [
+                'coin' => 'BTC',
+                'score' => 0.20, 
+                'created_at' => '2018-07-06 23:45:01'
+            ],
+            [
+                'coin' => 'LTC',
+                'score' => 0.15, 
+                'created_at' => '2018-07-06 23:45:01'
+            ], 
+            [
+                'coin' => 'ETH',
+                'score' => 0.22, 
+                'created_at' => '2018-07-06 23:45:01'
+            ]  
+        ]
+    );
 }); 
 
 Auth::routes();
